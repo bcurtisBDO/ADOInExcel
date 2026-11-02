@@ -1,0 +1,13 @@
+node_modules
+dist
+build
+out
+*.vsix
+.env
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json
+packages/excel-addin/certs
+coverage
+legacy/

@@ -1,0 +1,24 @@
+{
+  "name": "ado-open-in-excel",
+  "private": true,
+  "description": "Modern Azure DevOps Open in Excel — Windows-first Office.js replacement for the unsupported COM add-in",
+  "workspaces": [
+    "packages/shared",
+    "packages/ado-extension",
+    "packages/excel-addin"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test -w @ado-open-in-excel/shared",
+    "start:addin": "npm run start -w @ado-open-in-excel/excel-addin",
+    "start:addin:nodebug": "npm run start:nodebug -w @ado-open-in-excel/excel-addin",
+    "stop:addin": "npm run stop -w @ado-open-in-excel/excel-addin",
+    "sideload:addin": "npm run sideload -w @ado-open-in-excel/excel-addin",
+    "unsideload:addin": "npm run unsideload -w @ado-open-in-excel/excel-addin",
+    "start:ado": "npm run start:dev -w @ado-open-in-excel/ado-extension",
+    "package:ado": "npm run package -w @ado-open-in-excel/ado-extension"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ADO in Excel</title>
+    <link rel="stylesheet" href="taskpane.css" />
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header class="hero">
+      <h1>ADO in Excel</h1>
+      <p>Connect, refresh, and publish work items from Excel.</p>
+    </header>
+
+    <section class="card" data-section="connection">
+      <h2>
+        <button type="button" class="card-toggle" aria-expanded="true" aria-controls="connection-body">
+          Connection
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div id="connection-body" class="card-body">
+        <label for="orgUrl">Organization URL</label>
+        <input id="orgUrl" type="url" placeholder="https://dev.azure.com/your-org" autocomplete="off" />
+        <label for="clientId">Entra application (client) ID</label>
+        <input id="clientId" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" />
+        <div class="row">
+          <button id="entraSignIn" class="primary" type="button">Sign in with Microsoft</button>
+          <button id="entraSignOut" type="button">Sign out</button>
+        </div>
+        <label for="pat">Personal Access Token (optional)</label>
+        <input id="pat" type="password" placeholder="PAT fallback with Work Items read &amp; write" autocomplete="off" />
+        <button id="connect" type="button">Connect with PAT</button>
+        <p id="authStatus" class="muted">Not connected.</p>
+        <h3>Load a query</h3>
+        <p class="muted">After you connect, pick a project and saved query to fill this workbook.</p>
+        <label for="project">Project</label>
+        <select id="project"></select>
+        <label id="query-label">Saved query</label>
+        <div id="queryTree" class="query-tree" role="tree" aria-labelledby="query-label"></div>
+        <button id="loadQuery" type="button">Load query</button>
+      </div>
+    </section>
+
+    <section class="card" data-section="workbook">
+      <h2>
+        <button type="button" class="card-toggle" aria-expanded="true" aria-controls="workbook-body">
+          This workbook
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div id="workbook-body" class="card-body">
+        <p id="workbookStatus" class="muted">Open a workbook from Azure DevOps, or load a query in Connection.</p>
+        <button id="openQuery" type="button" hidden>Open query in Azure DevOps</button>
+        <div class="row">
+          <button id="refresh" type="button">Refresh</button>
+          <button id="publish" class="primary" type="button">Publish</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" data-section="selected">
+      <h2>
+        <button type="button" class="card-toggle" aria-expanded="true" aria-controls="selected-body">
+          Selected work item
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div id="selected-body" class="card-body">
+        <p id="selectedWorkItem" class="muted">Select a row with an ID. Click an ID cell, use View in Browser on the Home ribbon or the cell menu, or load details here.</p>
+        <p id="selectedParent" class="muted" hidden></p>
+        <div class="row">
+          <button id="openInAdo" class="primary" type="button">Open in Azure DevOps</button>
+          <button id="loadWorkItemDetails" type="button">Load details</button>
+        </div>
+        <h3>Related links</h3>
+        <p class="muted">Work item links of every type, hyperlinks, and commits or builds. Parent is shown above; use Indent/Outdent for hierarchy.</p>
+        <select id="relatedLinks" size="4"></select>
+        <div class="row">
+          <button id="openRelatedLink" type="button">Open link</button>
+          <button id="removeRelatedLink" type="button">Remove link</button>
+        </div>
+        <label for="relatedLinkId">Add work item ID</label>
+        <input id="relatedLinkId" type="text" inputmode="numeric" placeholder="12345" autocomplete="off" />
+        <label for="relatedLinkType">Link type</label>
+        <select id="relatedLinkType"></select>
+        <button id="addRelatedLink" type="button">Add link</button>
+        <label for="hyperlinkUrl">Add hyperlink</label>
+        <input id="hyperlinkUrl" type="url" placeholder="https://example.com/spec" autocomplete="off" />
+        <label for="hyperlinkComment">Comment (optional)</label>
+        <input id="hyperlinkComment" type="text" placeholder="Design spec" autocomplete="off" />
+        <button id="addHyperlink" type="button">Add hyperlink</button>
+        <h3>Attachments</h3>
+        <select id="attachments" size="4"></select>
+        <div class="row">
+          <button id="openAttachment" type="button">Open attachment</button>
+          <button id="removeAttachment" type="button">Remove</button>
+        </div>
+        <label for="attachmentFile">Attach a file</label>
+        <input id="attachmentFile" type="file" />
+        <button id="addAttachment" type="button">Attach file</button>
+        <h3>Discussion</h3>
+        <ul id="discussionList" class="discussion"></ul>
+        <label for="commentText">Add a comment</label>
+        <textarea id="commentText" rows="3" placeholder="Write a comment"></textarea>
+        <button id="addComment" type="button">Add comment</button>
+      </div>
+    </section>
+
+    <section class="card" data-section="insert">
+      <h2>
+        <button type="button" class="card-toggle" aria-expanded="true" aria-controls="insert-body">
+          Insert work item
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div id="insert-body" class="card-body">
+        <p class="muted">Types and states come from this project's process template. Description and other HTML fields edit as Markdown and publish back as HTML.</p>
+        <label for="workItemType">Work item type</label>
+        <select id="workItemType"></select>
+        <button id="insertWorkItem" class="primary" type="button">Insert work item</button>
+      </div>
+    </section>
+
+    <section class="card" data-section="columns">
+      <h2>
+        <button type="button" class="card-toggle" aria-expanded="true" aria-controls="columns-body">
+          Columns
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div id="columns-body" class="card-body">
+        <p class="muted">Arrange columns here, then click Apply changes to update the sheet once. ID, Work Item Type, Title, and Rev can be moved but not removed. Alt+Up and Alt+Down move the selected column.</p>
+        <label for="currentColumns">Columns in this list</label>
+        <select id="currentColumns" size="8"></select>
+        <div class="row">
+          <button id="moveColumnTop" type="button" title="Move to top">Top</button>
+          <button id="moveColumnUp" type="button">Up</button>
+          <button id="moveColumnDown" type="button">Down</button>
+          <button id="moveColumnBottom" type="button" title="Move to bottom">Bottom</button>
+        </div>
+        <button id="removeColumn" type="button">Remove column</button>
+        <label for="addableColumns">Available fields</label>
+        <input id="addableFilter" type="search" placeholder="Filter fields" autocomplete="off" />
+        <select id="addableColumns" size="8" multiple></select>
+        <button id="addColumn" type="button">Add selected below current column</button>
+        <p id="columnDraftStatus" class="muted">No pending column changes.</p>
+        <div class="row">
+          <button id="applyColumns" class="primary" type="button">Apply changes</button>
+          <button id="discardColumns" type="button">Discard</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" data-section="tree">
+      <h2>
+        <button type="button" class="card-toggle" aria-expanded="true" aria-controls="tree-body">
+          Tree list
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div id="tree-body" class="card-body">
+        <p class="muted">Parent/child uses one Title column. Indent a row to nest it under the item above. Excel also groups child rows. Publish writes parent links from indent level.</p>
+        <div class="row">
+          <button id="convertTree" type="button">Convert to tree</button>
+          <button id="addLevel" type="button">Add tree level</button>
+        </div>
+        <div class="row">
+          <button id="indent" type="button">Indent</button>
+          <button id="outdent" type="button">Outdent</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" data-section="classification">
+      <h2>
+        <button type="button" class="card-toggle" aria-expanded="true" aria-controls="classification-body">
+          Area and Iteration
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div id="classification-body" class="card-body">
+        <p class="muted">Select an Area Path or Iteration Path cell, choose a node, then apply. Excel also limits those columns to this project's tree.</p>
+        <label for="areaFilter">Area path</label>
+        <input id="areaFilter" type="search" placeholder="Filter area paths" autocomplete="off" />
+        <select id="areaPath" size="8"></select>
+        <button id="applyAreaPath" class="primary" type="button">Apply area path</button>
+        <label for="iterationFilter">Iteration path</label>
+        <input id="iterationFilter" type="search" placeholder="Filter iteration paths" autocomplete="off" />
+        <select id="iterationPath" size="8"></select>
+        <button id="applyIterationPath" class="primary" type="button">Apply iteration path</button>
+      </div>
+    </section>
+
+    <section class="card" data-section="assigned">
+      <h2>
+        <button type="button" class="card-toggle" aria-expanded="true" aria-controls="assigned-body">
+          Assigned To
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div id="assigned-body" class="card-body">
+        <p id="identityHint" class="muted">Click an Assigned To cell and use Excel's dropdown. Search here only if the person is not on this project's teams.</p>
+        <label for="identitySearch">Find someone else</label>
+        <input id="identitySearch" type="search" placeholder="Name or email" autocomplete="off" />
+        <select id="identityResults" size="4"></select>
+        <button id="applyIdentity" type="button">Apply to selected cell</button>
+      </div>
+    </section>
+
+    <section class="card" data-section="status">
+      <h2>
+        <button type="button" class="card-toggle" aria-expanded="true" aria-controls="status-body">
+          Status
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div id="status-body" class="card-body">
+        <p id="status" class="status" role="status">Not connected.</p>
+        <ul id="details"></ul>
+      </div>
+    </section>
+  </body>
+</html>

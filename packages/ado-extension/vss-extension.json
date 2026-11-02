@@ -1,0 +1,105 @@
+{
+  "manifestVersion": 1,
+  "id": "open-work-items-in-excel",
+  "version": "1.2.0",
+  "name": "ADO in Excel",
+  "scopes": [
+    "vso.work",
+    "vso.work_write"
+  ],
+  "description": "Open Azure DevOps queries and work items in Excel for bulk edit, then refresh, publish, and open items from the modern Excel add-in.",
+  "publisher": "BillCurtisADOTools",
+  "icons": {
+    "default": "img/excellogo.png"
+  },
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "tags": [
+    "excel",
+    "office",
+    "workitem",
+    "agile",
+    "bulk edit"
+  ],
+  "content": {
+    "details": {
+      "path": "details.md"
+    }
+  },
+  "branding": {
+    "color": "rgb(255, 255, 255)",
+    "theme": "light"
+  },
+  "files": [
+    {
+      "path": "img",
+      "addressable": true
+    },
+    {
+      "path": "dist",
+      "addressable": true
+    }
+  ],
+  "categories": [
+    "Azure Boards"
+  ],
+  "contributions": [
+    {
+      "id": "openQueryOnToolbarAction",
+      "type": "ms.vss-web.action",
+      "description": "ADO in Excel toolbar menu item on the query results.",
+      "targets": [
+        "ms.vss-work-web.work-item-query-results-toolbar-menu"
+      ],
+      "properties": {
+        "text": "ADO in Excel",
+        "icon": "img/miniexcellogo.png",
+        "group": "actions",
+        "uri": "dist/index.html",
+        "registeredObjectId": "openQueryOnToolbarAction"
+      }
+    },
+    {
+      "id": "openQueryAction",
+      "type": "ms.vss-web.action",
+      "description": "ADO in Excel context menu on a query definition.",
+      "targets": [
+        "ms.vss-work-web.work-item-query-menu"
+      ],
+      "properties": {
+        "text": "ADO in Excel",
+        "icon": "img/miniexcellogo.png",
+        "group": "actions",
+        "uri": "dist/index.html",
+        "registeredObjectId": "openQueryAction"
+      }
+    },
+    {
+      "id": "openWorkItemsAction",
+      "type": "ms.vss-web.action",
+      "description": "ADO in Excel context menu on a work item.",
+      "targets": [
+        "ms.vss-work-web.work-item-context-menu"
+      ],
+      "properties": {
+        "text": "ADO in Excel",
+        "icon": "img/miniexcellogo.png",
+        "group": "actions",
+        "uri": "dist/index.html",
+        "registeredObjectId": "openWorkItemsAction"
+      }
+    },
+    {
+      "id": "download-dialog",
+      "type": "ms.vss-web.external-content",
+      "description": "Builds and downloads a bound Excel workbook.",
+      "targets": [],
+      "properties": {
+        "uri": "dist/download.html"
+      }
+    }
+  ]
+}

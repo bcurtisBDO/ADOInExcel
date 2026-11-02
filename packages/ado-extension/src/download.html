@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 16px;
+        color: #323130;
+        font-size: 14px;
+      }
+      #status {
+        margin: 0 0 16px;
+        line-height: 1.4;
+      }
+      #status.error {
+        color: #a4262c;
+      }
+      button {
+        background: #217346;
+        color: #fff;
+        border: 0;
+        border-radius: 2px;
+        padding: 8px 14px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #185c37;
+      }
+      button:disabled {
+        background: #c8c8c8;
+        cursor: default;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="status">Preparing workbook…</p>
+    <p id="actions"></p>
+    <script type="text/javascript" src="download.js" charset="utf-8"></script>
+  </body>
+</html>

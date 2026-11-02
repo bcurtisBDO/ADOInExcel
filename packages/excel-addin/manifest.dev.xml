@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+  xsi:type="TaskPaneApp">
+  <Id>67d9cc9b-b2f9-434f-ad07-ec33be30a033</Id>
+  <Version>1.2.0.0</Version>
+  <ProviderName>ADO in Excel</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="ADO in Excel (Dev)"/>
+  <Description DefaultValue="Refresh and publish Azure DevOps work items from Excel, open them in the browser, and manage links, attachments, and discussion."/>
+  <IconUrl DefaultValue="https://localhost:3001/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3001/assets/icon-80.png"/>
+  <SupportUrl DefaultValue="https://github.com/DrBillC67/ADO-OpenInExcel"/>
+  <AppDomains>
+    <AppDomain>https://dev.azure.com</AppDomain>
+    <AppDomain>https://login.microsoftonline.com</AppDomain>
+    <AppDomain>https://login.microsoft.com</AppDomain>
+    <AppDomain>https://localhost:3001</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Workbook"/>
+  </Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://localhost:3001/taskpane.html"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Workbook">
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title"/>
+            <Description resid="GetStarted.Description"/>
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+          <FunctionFile resid="Commands.Url"/>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="AdoOpenInExcel.Group">
+                <Label resid="GroupLabel"/>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16"/>
+                  <bt:Image size="32" resid="Icon.32"/>
+                  <bt:Image size="80" resid="Icon.80"/>
+                </Icon>
+                <Control xsi:type="Button" id="AdoOpenInExcel.TaskpaneButton">
+                  <Label resid="TaskpaneButton.Label"/>
+                  <Supertip>
+                    <Title resid="TaskpaneButton.Label"/>
+                    <Description resid="TaskpaneButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="AdoOpenInExcel.RefreshButton">
+                  <Label resid="RefreshButton.Label"/>
+                  <Supertip>
+                    <Title resid="RefreshButton.Label"/>
+                    <Description resid="RefreshButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>refreshWorkItems</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="AdoOpenInExcel.PublishButton">
+                  <Label resid="PublishButton.Label"/>
+                  <Supertip>
+                    <Title resid="PublishButton.Label"/>
+                    <Description resid="PublishButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>publishWorkItems</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="AdoOpenInExcel.OpenInAdoButton">
+                  <Label resid="OpenInAdoButton.Label"/>
+                  <Supertip>
+                    <Title resid="OpenInAdoButton.Label"/>
+                    <Description resid="OpenInAdoButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openWorkItemInAdo</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+          <ExtensionPoint xsi:type="ContextMenu">
+            <OfficeMenu id="ContextMenuCell">
+              <Control xsi:type="Button" id="AdoOpenInExcel.OpenInAdoContext">
+                <Label resid="OpenInAdoButton.Label"/>
+                <Supertip>
+                  <Title resid="OpenInAdoButton.Label"/>
+                  <Description resid="OpenInAdoButton.Tooltip"/>
+                </Supertip>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16"/>
+                  <bt:Image size="32" resid="Icon.32"/>
+                  <bt:Image size="80" resid="Icon.80"/>
+                </Icon>
+                <Action xsi:type="ExecuteFunction">
+                  <FunctionName>openWorkItemInAdo</FunctionName>
+                </Action>
+              </Control>
+            </OfficeMenu>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://localhost:3001/assets/icon-16.png"/>
+        <bt:Image id="Icon.32" DefaultValue="https://localhost:3001/assets/icon-32.png"/>
+        <bt:Image id="Icon.80" DefaultValue="https://localhost:3001/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://github.com/DrBillC67/ADO-OpenInExcel"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3001/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3001/taskpane.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="ADO in Excel (Dev)"/>
+        <bt:String id="GroupLabel" DefaultValue="ADO in Excel (Dev)"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Work Items"/>
+        <bt:String id="RefreshButton.Label" DefaultValue="Refresh"/>
+        <bt:String id="PublishButton.Label" DefaultValue="Publish"/>
+        <bt:String id="OpenInAdoButton.Label" DefaultValue="View in Browser"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="Connect to Azure DevOps, refresh and publish work items, and open the selected item in the browser."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Open the Azure DevOps work item task pane"/>
+        <bt:String id="RefreshButton.Tooltip" DefaultValue="Reload work items from Azure DevOps"/>
+        <bt:String id="PublishButton.Tooltip" DefaultValue="Publish worksheet changes to Azure DevOps"/>
+        <bt:String id="OpenInAdoButton.Tooltip" DefaultValue="Open the selected work item in Azure DevOps"/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

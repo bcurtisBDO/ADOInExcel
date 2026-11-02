@@ -1,0 +1,292 @@
+:root {
+  color-scheme: light;
+  --green: #217346;
+  --green-dark: #185c37;
+  --text: #201f1e;
+  --muted: #605e5c;
+  --border: #d2d0ce;
+  --bg: #f3f2f1;
+  --card: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+}
+
+.hero {
+  background: var(--green);
+  color: #fff;
+  padding: 16px 16px 18px;
+}
+
+.hero h1 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.hero p {
+  margin: 0;
+  opacity: 0.92;
+}
+
+.card {
+  background: var(--card);
+  margin: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+h2 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.card.collapsed h2 {
+  margin: 0;
+}
+
+.card-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 0;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+}
+
+.card-toggle:hover,
+.card-toggle:focus {
+  background: transparent;
+  color: var(--green-dark);
+}
+
+.card-toggle .chevron {
+  width: 0.45em;
+  height: 0.45em;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.card.collapsed .card-toggle .chevron {
+  transform: rotate(-45deg);
+}
+
+.card.collapsed .card-body {
+  display: none;
+}
+
+h3 {
+  margin: 14px 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+label {
+  display: block;
+  margin: 8px 0 4px;
+  color: var(--muted);
+}
+
+input, select, button, textarea {
+  width: 100%;
+  font: inherit;
+}
+
+input, select, textarea {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 7px 8px;
+  background: #fff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+}
+
+button {
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+button.primary {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+
+button.primary:hover {
+  background: var(--green-dark);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.row button {
+  flex: 1;
+}
+
+.muted, .status {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+#details {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.error {
+  color: #a4262c;
+}
+
+.ok {
+  color: var(--green-dark);
+}
+
+select[size] {
+  height: 7.5rem;
+}
+
+#currentColumns,
+#addableColumns {
+  height: 10rem;
+}
+
+#addableFilter {
+  margin-bottom: 4px;
+}
+
+.row button {
+  min-width: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#columnDraftStatus {
+  margin-top: 10px;
+}
+
+#columnDraftStatus.pending {
+  color: #8a5300;
+  font-weight: 600;
+}
+
+.discussion {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  max-height: 12rem;
+  overflow: auto;
+}
+
+.discussion li {
+  border-top: 1px solid var(--border);
+  padding: 8px 0;
+}
+
+.discussion .meta {
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.discussion p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+#areaPath,
+#iterationPath {
+  height: 9.5rem;
+  font-family: "Cascadia Mono", "Consolas", monospace;
+  font-size: 12px;
+}
+
+.query-tree {
+  height: 14rem;
+  overflow: auto;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 4px 0;
+  font-size: 12px;
+}
+
+.query-tree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 12px;
+}
+
+.query-tree > ul {
+  padding-left: 4px;
+}
+
+.query-tree button {
+  display: flex;
+  width: calc(100% - 8px);
+  margin: 0 4px;
+  padding: 3px 6px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  border-radius: 2px;
+}
+
+.query-tree button:hover,
+.query-tree button:focus {
+  background: #deecf9;
+}
+
+.query-tree .tree-folder {
+  font-weight: 600;
+}
+
+.query-tree .tree-folder::before {
+  content: "▸ ";
+  color: var(--muted);
+}
+
+.query-tree .tree-folder[aria-expanded="true"]::before {
+  content: "▾ ";
+}
+
+.query-tree .tree-query.selected {
+  background: #217346;
+  color: #fff;
+}
+
